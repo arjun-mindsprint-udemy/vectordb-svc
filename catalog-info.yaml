@@ -1,0 +1,18 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: vectordb-svc
+  description: Microservice for vectordb
+  annotations:
+    github.com/project-slug: arjun-mindsprint-udemy/vectordb-svc
+    backstage.io/techdocs-ref: dir:.
+    jenkins.io/job-full-name: node-app-test-folder/arjun-mindsprint-udemy-repos/vectordb-svc
+    grafana/dashboard-selector: "(tags @> 'my-service' || tags @> 'my-service-slo') && tags @> 'generated'"
+    prometheus.io/alert: all
+    prometheus.io/rule: sum(increase(http_request_total[5m])), memUsage|component,node_memory_active_bytes|instance,sum by (instance) (node_cpu_seconds_total)
+spec:
+  type: service
+  owner: development
+  lifecycle: experimental
+  providesApis:
+    - vectordb-svc-api
