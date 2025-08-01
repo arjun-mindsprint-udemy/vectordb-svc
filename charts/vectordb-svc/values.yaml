@@ -25,7 +25,6 @@ ingress:
   className: "nginx"
   annotations:
     nginx.ingress.kubernetes.io/proxy-body-size: "10m"
-  
   hosts:
     - host: vectordb-svc-dev.test.com
       paths:

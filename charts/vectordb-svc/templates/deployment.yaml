@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "node-app.fullname" . }}
+  name: {{ include "vectordb-service.fullname" . }}
   labels:
-    {{- include "node-app.labels" . | nindent 4 }}
+    {{- include "vectordb-service.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "node-app.selectorLabels" . | nindent 6 }}
+      {{- include "vectordb-service.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       prometheus.io/scrape: "true"
@@ -21,7 +21,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "node-app.labels" . | nindent 8 }}
+        {{- include "vectordb-service.labels" . | nindent 8 }}
         {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -30,7 +30,7 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "node-app.serviceAccountName" . }}
+      serviceAccountName: {{ include "vectordb-service.serviceAccountName" . }}
       {{- with .Values.podSecurityContext }}
       securityContext:
         {{- toYaml . | nindent 8 }}
