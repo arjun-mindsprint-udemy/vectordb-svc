@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "vectordb-service.name" -}}
+{{- define "vectordb-svc.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "vectordb-service.fullname" -}}
+{{- define "vectordb-svc.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,16 +26,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "vectordb-service.chart" -}}
+{{- define "vectordb-svc.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "vectordb-service.labels" -}}
-helm.sh/chart: {{ include "vectordb-service.chart" . }}
-{{ include "vectordb-service.selectorLabels" . }}
+{{- define "vectordb-svc.labels" -}}
+helm.sh/chart: {{ include "vectordb-svc.chart" . }}
+{{ include "vectordb-svc.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -45,17 +45,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "vectordb-service.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "vectordb-service.name" . }}
+{{- define "vectordb-svc.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "vectordb-svc.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "vectordb-service.serviceAccountName" -}}
+{{- define "vectordb-svc.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "vectordb-service.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "vectordb-svc.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
