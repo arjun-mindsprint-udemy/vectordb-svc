@@ -21,6 +21,10 @@ app.post('/query', (req, res)=> {
     res.json({ textList });
 });
 
+app.get('/health', (req, res) => {
+    res.json({ status: "UP" });
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 });
