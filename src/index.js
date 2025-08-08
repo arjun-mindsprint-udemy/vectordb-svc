@@ -1,21 +1,28 @@
 const express = require('express');
 
-const {upsertDocuments, querySimilar} = require('./app.js');
+const { upsertDocuments, querySimilar } = require('./app.js');
 
 const app = express()
 const port = 3023
+const topK = 3
+const metric = "cosine"
 
 app.use(express.json())
 
-app.post('/upsert', (req, res)=> {
-    const { docs } = req.body;
-    upsertDocuments(docs);
-    res.json({message: 'Upserted successfully'});
+app.post('/upsert', async (req, res) => {
+    try {
+        const { docs } = req.body;
+        await upsertDocuments(docs);
+        res.json({ message: 'Upserted successfully' });
+    } catch (error) {
+        console.error('Upsert error:', error);
+        res.status(500).json({ error: 'Upsert failed', details: error.message });
+    }
 });
 
-app.post('/query', (req, res)=> {
+app.post('/query', async (req, res) => {
     const { embedding } = req.body;
-    const results = querySimilar(embedding);
+    const results = await querySimilar(embedding, topK, metric);
     textList = results.map(d => d.text)
     console.log("textList: ", textList)
     res.json({ textList });
@@ -26,5 +33,5 @@ app.get('/health', (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+    console.log(`Example app listening on port ${port}`)
 });
