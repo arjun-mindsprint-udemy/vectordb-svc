@@ -22,7 +22,7 @@ app.post('/upsert', async (req, res) => {
 });
 
 app.post('/query', async (req, res) => {
-    const { embedding } = req.body;
+    const { embedding, topK, metric} = req.body;
     const results = await querySimilar(embedding, topK, metric);
     textList = results.map(d => d.text)
     console.log("textList: ", textList)
