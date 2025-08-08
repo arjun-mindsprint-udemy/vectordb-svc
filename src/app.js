@@ -1,7 +1,6 @@
 let db;
 
-// const dbType = process.env.VECTOR_DB_TYPE || "redis";
-const dbType = "pgvector";
+const dbType = process.env.VECTOR_DB_TYPE || "redis";
 
 if (dbType === 'pgvector') {
     db = require('./vectorStores/pgvector.js');
