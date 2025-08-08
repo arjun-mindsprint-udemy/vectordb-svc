@@ -1,7 +1,7 @@
 const { createClient } = require('redis');
 const { getSimilarity } = require('../similarity_metrics/similarityMetrics');
 
-const redisUrl = process.env.REDIS_URL || 'redis://localhost:6379';
+const redisUrl = process.env.REDIS_URL;
 const client = createClient({ url: redisUrl });
 
 client.connect();

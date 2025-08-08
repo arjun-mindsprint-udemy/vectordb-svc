@@ -1,7 +1,7 @@
 const { Pool } = require('pg');
 
 const pool = new Pool({
-    connectionString: process.env.PGVECTOR_URL || 'postgresql://postgres:password@localhost:5432/vectordb'
+    connectionString: process.env.PGVECTOR_URL
 });
 
 // Ensure the table exists (run once at startup)
